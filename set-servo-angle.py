@@ -39,15 +39,11 @@ servo = setup_servo(servo_pin)
 # Start PWM running, with value of 0 (pulse off)
 servo.start(0)
 
-# Loop to allow user to set servo angle. Try/finally allows exit
-# with execution of servo.stop and GPIO cleanup :)
 def set_angle(angle: int):
     if angle == 0:
         angle = -1
     servo.ChangeDutyCycle(2+(angle/18))
-    # time.sleep(0.5)
-    # servo.ChangeDutyCycle(0)
-    
+
 try:
     if from_angle != to_angle:
         step = 3 if to_angle > from_angle else -3
