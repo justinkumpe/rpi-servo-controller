@@ -11,11 +11,13 @@ parser=argparse.ArgumentParser()
 parser.add_argument("-p", "--servo-pin", help="Board Pin number for SERVO motor", required= False, default= "8")
 parser.add_argument("-a", "--angle", help="Angle to move to", required= False, default= "0")
 parser.add_argument("-f", "--from_angle", help="Angle to move from", required= False)
+parser.add_argument("-s", "--steps", help="Number of steps to move motor at a time", required = False, default= "3")
 
 args=parser.parse_args()
 servo_pin: int = int(args.servo_pin)
 to_angle: int = int(args.angle)
 from_angle: int = int(args.from_angle) if args.from_angle else to_angle
+step: int = int(args.steps)
 
 # Set GPIO numbering mode
 GPIO.setmode(GPIO.BOARD)
@@ -46,7 +48,7 @@ def set_angle(angle: int):
 
 try:
     if from_angle != to_angle:
-        step = 3 if to_angle > from_angle else -3
+        step = step if to_angle > from_angle else 0 - step
         for angle in range(from_angle, to_angle, step):
             set_angle(angle)
             time.sleep(0.1)
