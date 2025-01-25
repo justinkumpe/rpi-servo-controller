@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Import libraries
 import RPi.GPIO as GPIO
 import time
